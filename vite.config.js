@@ -6,7 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5001',
+        // target: 'http://localhost:5001',
+         target: 'https://appraisalcalculationbackend.onrender.com',
         changeOrigin: true,
       },
     },
@@ -18,7 +19,9 @@ export default defineConfig({
   preview: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5001',
+        // target: 'http://localhost:5001',
+        target: 'https://appraisalcalculationbackend.onrender.com',
+
         changeOrigin: true,
       },
     },
