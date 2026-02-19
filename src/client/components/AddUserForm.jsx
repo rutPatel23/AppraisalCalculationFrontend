@@ -5,6 +5,7 @@ export default function AddUserForm({ onClose }) {
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [role, setRole] = useState('hr')
+  const [email,setEmail] = useState('')
   const [msg, setMsg] = useState('')
 
   const handleSubmit = async (e) => {
@@ -16,7 +17,7 @@ export default function AddUserForm({ onClose }) {
       const res = await fetch('https://appraisalcalculationbackend.onrender.com/api/add_user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ actor: localStorage.getItem('user'), username, password, role })
+        body: JSON.stringify({ actor: localStorage.getItem('user'), username, password, role,email })
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(data.error || res.statusText)
@@ -39,6 +40,10 @@ export default function AddUserForm({ onClose }) {
       <div className="form-row">
         <label>Confirm Password</label>
         <input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} />
+      </div>
+      <div className="form-row">
+        <label>E-mail</label>
+        <input type="email" value={email} onChange={e => setConfirm(e.target.value)} />
       </div>
       <div className="form-row">
         <label>Role</label>
