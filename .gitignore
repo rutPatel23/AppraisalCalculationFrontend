@@ -8,8 +8,8 @@ yarn.lock
 .env.*.local
 
 # Build outputs
-dist/
-build/
+# dist/
+# build/
 
 # Development
 .DS_Store
