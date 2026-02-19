@@ -13,7 +13,7 @@ export default function AddUserForm({ onClose }) {
     if (!username || !password || !confirm) return setMsg('Fill all fields')
     if (password !== confirm) return setMsg('Passwords do not match')
     try {
-      const res = await fetch('/api/add_user', {
+      const res = await fetch('https://appraisalcalculationbackend.onrender.com/api/add_user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actor: localStorage.getItem('user'), username, password, role })
