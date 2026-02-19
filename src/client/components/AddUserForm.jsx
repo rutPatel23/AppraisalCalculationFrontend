@@ -13,6 +13,7 @@ export default function AddUserForm({ onClose }) {
     setMsg('')
     if (!username || !password || !confirm) return setMsg('Fill all fields')
     if (password !== confirm) return setMsg('Passwords do not match')
+    if (email == null) return setMsg('Email cannot be empty')
     try {
       const res = await fetch('https://appraisalcalculationbackend.onrender.com/api/add_user', {
         method: 'POST',
@@ -43,7 +44,7 @@ export default function AddUserForm({ onClose }) {
       </div>
       <div className="form-row">
         <label>E-mail</label>
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+        <input value={email} onChange={e => setEmail(e.target.value)} />
       </div>
       <div className="form-row">
         <label>Role</label>
