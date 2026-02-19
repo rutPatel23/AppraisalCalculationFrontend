@@ -45,7 +45,7 @@ function DashboardPage({ user, onLogout }) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const empRes = await fetch("/api/employees");
+        const empRes = await fetch("https://appraisalcalculationbackend.onrender.com/api/employees");
         if (!empRes.ok) throw new Error("Failed to fetch employees");
         const employees = await empRes.json();
         setEmployees(employees);
@@ -73,7 +73,7 @@ function DashboardPage({ user, onLogout }) {
             }
           } catch (_) {}
           try {
-            const who = await fetch(`/api/whoami`, {
+            const who = await fetch(`https://appraisalcalculationbackend.onrender.com/api/whoami`, {
               headers: { "x-user": username },
             });
             if (who.ok) {
@@ -192,7 +192,7 @@ function DashboardPage({ user, onLogout }) {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch("/api/weights");
+        const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/weights");
         if (!res.ok) throw new Error("Failed to fetch weights");
         const w = await res.json();
         setWeights(w);
@@ -234,7 +234,7 @@ function DashboardPage({ user, onLogout }) {
 
   const handleViewDetails = async (id) => {
     try {
-      const res = await fetch(`/api/employees/${id}/inputdetails`);
+      const res = await fetch(`https://appraisalcalculationbackend.onrender.com/api/employees/${id}/inputdetails`);
       if (!res.ok) throw new Error("Failed to fetch details");
       const details = await res.json();
 
@@ -262,8 +262,8 @@ function DashboardPage({ user, onLogout }) {
     if (!id) return;
     try {
       const url = showInvalid
-        ? `/api/invaliddata/${id}`
-        : `/api/employeedetails/${id}`;
+        ? `https://appraisalcalculationbackend.onrender.com/api/invaliddata/${id}`
+        : `https://appraisalcalculationbackend.onrender.com/api/employeedetails/${id}`;
       const res = await fetch(url, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -272,7 +272,7 @@ function DashboardPage({ user, onLogout }) {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || res.statusText);
       // refresh lists
-      const empRes = await fetch("/api/employees");
+      const empRes = await fetch("https://appraisalcalculationbackend.onrender.com/api/employees");
       if (empRes.ok) setEmployees(await empRes.json());
       if (showInvalid) {
         const invRes = await fetch("/api/invalid");
@@ -322,7 +322,7 @@ function DashboardPage({ user, onLogout }) {
   const handleSetRole = async () => {
     // fetch users for select
     try {
-      const res = await fetch("/api/users");
+      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/users");
       const users = res.ok ? await res.json() : [];
       setModal({
         isOpen: true,
@@ -340,7 +340,7 @@ function DashboardPage({ user, onLogout }) {
 
   const handleDeleteUser = async () => {
     try {
-      const res = await fetch("/api/users");
+      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/users");
       const users = res.ok ? await res.json() : [];
       setModal({
         isOpen: true,

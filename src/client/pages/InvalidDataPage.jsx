@@ -28,7 +28,7 @@ export default function InvalidDataPage({ user, onLogout }) {
   const fetchInvalid = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/invalid");
+      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/invalid");
       if (!res.ok) throw new Error("Failed to fetch invalid data");
       const data = await res.json();
       setInvalidData(data);
@@ -52,7 +52,7 @@ export default function InvalidDataPage({ user, onLogout }) {
 
   const handleViewDetails = async (id) => {
     try {
-      const res = await fetch(`/api/employees/${id}/inputdetails`);
+      const res = await fetch(`https://appraisalcalculationbackend.onrender.com/api/employees/${id}/inputdetails`);
       if (!res.ok) throw new Error("Failed to fetch details");
       const details = await res.json();
       setModal({ isOpen: true, title: `Details: ${id}`, details });
@@ -99,7 +99,7 @@ export default function InvalidDataPage({ user, onLogout }) {
   const handleSetRole = async () => {
     // fetch users for select
     try {
-      const res = await fetch("/api/users");
+      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/users");
       const users = res.ok ? await res.json() : [];
       setModal({
         isOpen: true,
@@ -117,7 +117,7 @@ export default function InvalidDataPage({ user, onLogout }) {
 
   const handleDeleteUser = async () => {
     try {
-      const res = await fetch("/api/users");
+      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/users");
       const users = res.ok ? await res.json() : [];
       setModal({
         isOpen: true,
@@ -150,7 +150,7 @@ export default function InvalidDataPage({ user, onLogout }) {
   const handleDelete = async (id) => {
     if (!confirm("Delete this invalid record?")) return;
     try {
-      const res = await fetch(`/api/invaliddata/${id}`, {
+      const res = await fetch(`https://appraisalcalculationbackend.onrender.com/api/invaliddata/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ actor: localStorage.getItem("user") }),
@@ -168,7 +168,7 @@ export default function InvalidDataPage({ user, onLogout }) {
   const handleShowWeights = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/weights");
+      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/weights");
       if (!res.ok) throw new Error("Failed to fetch weights");
       const w = await res.json();
       setWeights(w);
