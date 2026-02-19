@@ -13,7 +13,7 @@ export default function ChangePasswordForm({ onClose }) {
     if (next !== confirm) return setMsg('Passwords do not match')
     try {
       const username = localStorage.getItem('user')
-      const res = await fetch('/api/change_password', {
+      const res = await fetch('https://appraisalcalculationbackend.onrender.com/api/change_password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, current, next })

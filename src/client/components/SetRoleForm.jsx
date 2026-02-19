@@ -15,7 +15,7 @@ export default function SetRoleForm({ users = [], onClose }) {
   const loadPerms = async (u) => {
     if (!u) return
     try {
-      const r = await fetch(`/api/permissions/${encodeURIComponent(u)}`)
+      const r = await fetch(`https://appraisalcalculationbackend.onrender.com/api/permissions/${encodeURIComponent(u)}`)
       if (r.ok) {
         const p = await r.json()
         setCanAdd(!!p.can_add)
@@ -31,13 +31,13 @@ export default function SetRoleForm({ users = [], onClose }) {
     e.preventDefault(); setMsg('')
     if (!username || !role) return setMsg('Fill all fields')
     try {
-      const res = await fetch('/api/set_role', {
+      const res = await fetch('https://appraisalcalculationbackend.onrender.com/api/set_role', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actor: localStorage.getItem('user'), username, role })
       })
       const data = await res.json().catch(()=>({}))
       if (!res.ok) throw new Error(data.error || res.statusText)
-      const rp = await fetch('/api/set_permissions', {
+      const rp = await fetch('https://appraisalcalculationbackend.onrender.com/api/set_permissions', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actor: localStorage.getItem('user'), username, can_add: canAdd, can_update: canUpdate, can_delete: canDelete })
       })
