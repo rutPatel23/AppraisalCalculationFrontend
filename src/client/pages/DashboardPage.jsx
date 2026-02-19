@@ -506,7 +506,9 @@ function DashboardPage({ user, onLogout }) {
           sortKey={sortKey}
           sortOrder={sortOrder}
           showInvalid={showInvalid}
-          perms={perms}
+          // perms={perms}
+          perms={{ can_add: false, can_update: true, can_delete: true }}
+
         />
       </main>
 
