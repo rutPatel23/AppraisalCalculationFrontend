@@ -43,7 +43,7 @@ export default function AddUserForm({ onClose }) {
       </div>
       <div className="form-row">
         <label>E-mail</label>
-        <input type="email" value={email} onChange={e => setConfirm(e.target.value)} />
+        <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
       </div>
       <div className="form-row">
         <label>Role</label>
