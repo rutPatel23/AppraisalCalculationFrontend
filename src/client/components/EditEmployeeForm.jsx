@@ -134,8 +134,8 @@ export default function EditEmployeeForm({ data = {}, onClose, isInvalid = false
 
         <div style={{ display:'flex', gap:8, alignItems:'center', marginTop:8 }}>
           <button className="btn" type="submit">Save</button>
-          <span style={{ color: msg && msg.includes('Saved') ? '#22c55e' : '#ef4444' }}>{msg}</span>
           <button type="button" className="btn" onClick={onClose} style={{ marginLeft:'auto' }}>Close</button>
+          <span style={{ color: msg && msg.includes('Saved') ? '#22c55e' : '#ef4444' }}>{msg}</span>
         </div>
       </form>
     )
@@ -169,8 +169,8 @@ export default function EditEmployeeForm({ data = {}, onClose, isInvalid = false
 
       <div style={{ display:'flex', gap:8, alignItems:'center', marginTop:8 }}>
         <button className="btn" type="submit">Save</button>
-        <span style={{ color: msg && msg.includes('Saved') ? '#22c55e' : '#ef4444' }}>{msg}</span>
         <button type="button" className="btn" onClick={onClose} style={{ marginLeft:'auto' }}>Close</button>
+        <span style={{ color: msg && msg.includes('Saved') ? '#22c55e' : '#ef4444' }}>{msg}</span>
       </div>
     </form>
   )

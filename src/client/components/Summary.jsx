@@ -32,7 +32,7 @@ function Summary({ employees }) {
   }, [employees])
 
   const formatMoney = (n) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(n)
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 }).format(n)
   }
 
   return (

@@ -36,8 +36,8 @@ export default function ChangePasswordForm({ onClose }) {
       <input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} />
       <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 8 }}>
         <button className="btn" type="submit">Update</button>
-        <span style={{ color: msg && msg.includes('updated') ? '#22c55e' : '#ef4444' }}>{msg}</span>
         <button type="button" className="btn" onClick={onClose} style={{ marginLeft: 'auto' }}>Close</button>
+        <span style={{ color: msg && msg.includes('updated') ? '#22c55e' : '#ef4444' }}>{msg}</span>
       </div>
     </form>
   )

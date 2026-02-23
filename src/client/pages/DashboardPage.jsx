@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import Loader from "../components/Loader";
 import UserMenu from "../components/UserMenu";
 import EmployeeTable from "../components/EmployeeTable";
 import Modal from "../components/Modal";
@@ -365,7 +366,9 @@ function DashboardPage({ user, onLogout }) {
 
   if (loading) {
     return (
-      <main style={{ padding: "20px", textAlign: "center" }}>Loading...</main>
+      <main style={{ padding: "20px", textAlign: "center" }}>
+        <Loader />
+      </main>
     );
   }
 
@@ -497,19 +500,38 @@ function DashboardPage({ user, onLogout }) {
 
         <Summary employees={paginatedEmployees} />
 
-        <EmployeeTable
-          employees={paginatedEmployees}
-          onSort={handleSort}
-          onEdit={handleEdit}
-          onViewDetails={handleViewDetails}
-          onDelete={handleDelete}
-          sortKey={sortKey}
-          sortOrder={sortOrder}
-          showInvalid={showInvalid}
-          // perms={perms}
-          perms={{ can_add: false, can_update: true, can_delete: true }}
-
-        />
+        <div className="employee-table-wrap">
+          <table className="employee-table">
+            <thead>
+              <tr>
+                <th onClick={() => handleSort('id')}>ID {sortKey==='id'?sortOrder==='asc'?"↑":"↓":''}</th>
+                <th onClick={() => handleSort('name')}>Name {sortKey==='name'?sortOrder==='asc'?"↑":"↓":''}</th>
+                <th onClick={() => handleSort('department')}>Department {sortKey==='department'?sortOrder==='asc'?"↑":"↓":''}</th>
+                <th onClick={() => handleSort('currentsalary')}>Current Salary {sortKey==='currentsalary'?sortOrder==='asc'?"↑":"↓":''}</th>
+                <th onClick={() => handleSort('grade')}>Grade {sortKey==='grade'?sortOrder==='asc'?"↑":"↓":''}</th>
+                <th onClick={() => handleSort('increment')}>Increment (%) {sortKey==='increment'?sortOrder==='asc'?"↑":"↓":''}</th>
+                <th onClick={() => handleSort('incrementedsalary')}>Incremented Salary {sortKey==='incrementedsalary'?sortOrder==='asc'?"↑":"↓":''}</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedEmployees.map((e, i) => (
+                <tr key={e.id} className={i%2===0?"even-row":"odd-row"}>
+                  <td>{e.id}</td>
+                  <td>{e.name}</td>
+                  <td>{e.department}</td>
+                  <td>{e.currentsalary}</td>
+                  <td>{e.grade}</td>
+                  <td>{e.increment}</td>
+                  <td>{e.incrementedsalary}</td>
+                  <td>
+                    <button className="action-btn" title="Actions">⋯</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </main>
 
       <Modal

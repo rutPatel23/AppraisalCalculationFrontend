@@ -260,7 +260,7 @@ h1 {
 
 .menu-wrap { margin-left: auto; position: relative; }
 
-.menu {
+.menu,.menu:hover{
   position: absolute;
   right: 0;
   top: calc(100% + 8px);
@@ -271,6 +271,8 @@ h1 {
   min-width: 220px;
   padding: 6px;
 }
+
+
 
 .menu-item {
   width: 100%;

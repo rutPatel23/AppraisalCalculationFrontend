@@ -4,7 +4,7 @@ function EmployeeTable({ employees, onSort, onEdit, onViewDetails, onDelete, sor
   const [openRowMenu, setOpenRowMenu] = useState(null)
   const formatMoney = (n) => {
     if (n === null || n === undefined) return '—'
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(n)
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 }).format(n)
   }
 
   const renderSortIndicator = (key) => {
@@ -64,6 +64,8 @@ function EmployeeTable({ employees, onSort, onEdit, onViewDetails, onDelete, sor
                 <td className="num">{formatMoney(emp.currentsalary)}</td>
                 <td>{emp.grade}</td>
                 <td className="num">{emp.increment ? `${emp.increment}%` : '—'}</td>
+                {/* <td className="num">{emp.increment}</td> */}
+
                 <td className="num">{formatMoney(emp.incrementedsalary)}</td>
               </>
             )}

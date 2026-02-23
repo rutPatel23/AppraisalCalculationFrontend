@@ -1,20 +1,35 @@
-import React, { useState } from 'react'
-
+import React, { useState, useRef, useEffect } from 'react'
+ 
 function UserMenu({ user, onLogout, onChangePassword, onAddUser, onSetRole, onDeleteUser, onToggleTheme }) {
   const [isOpen, setIsOpen] = useState(false)
-
+  const menuRef = useRef(null)
+ 
   const handleTheme = () => {
     onToggleTheme && onToggleTheme()
     setIsOpen(false)
   }
-
+ 
   const handleClick = (cb) => {
     if (cb) cb()
     setIsOpen(false)
   }
-
+ 
+  // ✅ close menu when clicking outside
+  useEffect(() => {
+    function handleOutsideClick(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setIsOpen(false)
+      }
+    }
+ 
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [])
+ 
   return (
-    <div className="menu-wrap" id="userMenuWrap">
+    <div ref={menuRef} className="menu-wrap" id="userMenuWrap">
       <button
         id="userMenuBtn"
         type="button"
@@ -41,12 +56,17 @@ function UserMenu({ user, onLogout, onChangePassword, onAddUser, onSetRole, onDe
           Toggle Theme
         </button>
         <hr />
-        <button type="button" className="menu-item" id="menuLogout" onClick={() => { setIsOpen(false); onLogout && onLogout(); }}>
+        <button
+          type="button"
+          className="menu-item"
+          id="menuLogout"
+          onClick={() => { setIsOpen(false); onLogout && onLogout(); }}
+        >
           Logout
         </button>
       </div>
     </div>
   )
 }
-
+ 
 export default UserMenu

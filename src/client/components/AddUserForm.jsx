@@ -55,8 +55,8 @@ export default function AddUserForm({ onClose }) {
       </div>
       <div className="form-actions">
         <button className="btn" type="submit">Create</button>
-        <span className="form-msg" style={{ color: msg && msg.includes('created') ? '#22c55e' : '#ef4444' }}>{msg}</span>
         <button type="button" className="btn" onClick={onClose}>Close</button>
+        <span className="form-msg" style={{ color: msg && msg.includes('created') ? '#22c55e' : '#ef4444' }}>{msg}</span>
       </div>
     </form>
   )

@@ -1,0 +1,46 @@
+.loader-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.loader-block {
+  height: 32px;
+  width: 100%;
+  border-radius: 6px;
+  background: #e0e0e0;
+  position: relative;
+  overflow: hidden;
+}
+
+.loader-block::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .loader-block {
+    height: 24px;
+  }
+  .loader-skeleton {
+    gap: 10px;
+  }
+}

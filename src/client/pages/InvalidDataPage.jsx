@@ -4,6 +4,10 @@ import EmployeeTable from "../components/EmployeeTable";
 import Summary from "../components/Summary";
 import Modal from "../components/Modal";
 import BarChart from "../components/BarChart";
+import ChangePasswordForm from "../components/ChangePasswordForm";
+import AddUserForm from "../components/AddUserForm";
+import SetRoleForm from "../components/SetRoleForm";
+import DeleteUserForm from "../components/DeleteUserForm";
 import EditEmployeeForm from "../components/EditEmployeeForm";
 import UserMenu from "../components/UserMenu";
 import PieChart from "../components/PieChart";
@@ -506,8 +510,27 @@ export default function InvalidDataPage({ user, onLogout }) {
             />
           </div>
         )}
-
-        {modal.form && modal.form.type === "edit-employee" && (
+{/* Render form-based modals (change password, add user, set role, delete user, edit employee) */}
+        {modal.form && modal.form.type === "change-password" && (
+          <ChangePasswordForm onClose={handleCloseModal} />
+        )}
+        {modal.form && modal.form.type === "add-user" && (
+          <AddUserForm onClose={handleCloseModal} />
+        )}
+        {modal.form && modal.form.type === "set-role" && (
+          <SetRoleForm
+            users={modal.form.users || []}
+            onClose={handleCloseModal}
+          />
+        )}
+        {modal.form && modal.form.type === "delete-user" && (
+          <DeleteUserForm
+            users={modal.form.users || []}
+            onClose={handleCloseModal}
+          />
+        )}
+     
+             {modal.form && modal.form.type === "edit-employee" && (
           <EditEmployeeForm
             data={modal.form.data}
             isInvalid={modal.form.isInvalid}

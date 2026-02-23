@@ -30,8 +30,8 @@ export default function DeleteUserForm({ users = [], onClose }) {
       </select>
       <div style={{ display:'flex', gap:8, alignItems:'center', marginTop:8 }}>
         <button className="btn" type="submit">Delete</button>
-        <span style={{ color: msg && msg.includes('deleted') ? '#22c55e' : '#ef4444' }}>{msg}</span>
         <button type="button" className="btn" onClick={onClose} style={{ marginLeft:'auto' }}>Close</button>
+        <span style={{ color: msg && msg.includes('deleted') ? '#22c55e' : '#ef4444' }}>{msg}</span>
       </div>
     </form>
   )
