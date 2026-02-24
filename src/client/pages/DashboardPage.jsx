@@ -13,6 +13,9 @@ import PieChart from "../components/PieChart";
 import BarChart from "../components/BarChart";
 import { useNavigate } from "react-router-dom";
 import logo from "../pages/logo.png";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import "../styles.css";
 
 function DashboardPage({ user, onLogout }) {
   const [employees, setEmployees] = useState([]);
@@ -46,7 +49,9 @@ function DashboardPage({ user, onLogout }) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const empRes = await fetch("https://appraisalcalculationbackend.onrender.com/api/employees");
+        const empRes = await fetch(
+          "https://appraisalcalculationbackend.onrender.com/api/employees",
+        );
         if (!empRes.ok) throw new Error("Failed to fetch employees");
         const employees = await empRes.json();
         setEmployees(employees);
@@ -74,9 +79,12 @@ function DashboardPage({ user, onLogout }) {
             }
           } catch (_) {}
           try {
-            const who = await fetch(`https://appraisalcalculationbackend.onrender.com/api/whoami`, {
-              headers: { "x-user": username },
-            });
+            const who = await fetch(
+              `https://appraisalcalculationbackend.onrender.com/api/whoami`,
+              {
+                headers: { "x-user": username },
+              },
+            );
             if (who.ok) {
               const wr = await who.json();
               setRole((wr.role || "hr").toLowerCase());
@@ -193,7 +201,9 @@ function DashboardPage({ user, onLogout }) {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/weights");
+        const res = await fetch(
+          "https://appraisalcalculationbackend.onrender.com/api/weights",
+        );
         if (!res.ok) throw new Error("Failed to fetch weights");
         const w = await res.json();
         setWeights(w);
@@ -235,7 +245,9 @@ function DashboardPage({ user, onLogout }) {
 
   const handleViewDetails = async (id) => {
     try {
-      const res = await fetch(`https://appraisalcalculationbackend.onrender.com/api/employees/${id}/inputdetails`);
+      const res = await fetch(
+        `https://appraisalcalculationbackend.onrender.com/api/employees/${id}/inputdetails`,
+      );
       if (!res.ok) throw new Error("Failed to fetch details");
       const details = await res.json();
 
@@ -273,7 +285,9 @@ function DashboardPage({ user, onLogout }) {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || res.statusText);
       // refresh lists
-      const empRes = await fetch("https://appraisalcalculationbackend.onrender.com/api/employees");
+      const empRes = await fetch(
+        "https://appraisalcalculationbackend.onrender.com/api/employees",
+      );
       if (empRes.ok) setEmployees(await empRes.json());
       if (showInvalid) {
         const invRes = await fetch("/api/invalid");
@@ -323,7 +337,9 @@ function DashboardPage({ user, onLogout }) {
   const handleSetRole = async () => {
     // fetch users for select
     try {
-      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/users");
+      const res = await fetch(
+        "https://appraisalcalculationbackend.onrender.com/api/users",
+      );
       const users = res.ok ? await res.json() : [];
       setModal({
         isOpen: true,
@@ -341,7 +357,9 @@ function DashboardPage({ user, onLogout }) {
 
   const handleDeleteUser = async () => {
     try {
-      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/users");
+      const res = await fetch(
+        "https://appraisalcalculationbackend.onrender.com/api/users",
+      );
       const users = res.ok ? await res.json() : [];
       setModal({
         isOpen: true,
@@ -366,8 +384,20 @@ function DashboardPage({ user, onLogout }) {
 
   if (loading) {
     return (
-      <main style={{ padding: "20px", textAlign: "center" }}>
-        <Loader />
+      // <main style={{ padding: "20px", textAlign: "center" }}>
+      //   <Loader />
+      // </main>
+      <main style={{ padding: 20 }}>
+        {/* <SkeletonTheme baseColor="#fff5f5" highlightColor="#e0e0e0"> */}
+        <SkeletonTheme baseColor="transparent" highlightColor="#e0e0e0">
+          <Skeleton height={50} width={320} />
+          <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+            <Skeleton height={36} width={180} />
+            <Skeleton height={36} width={180} />
+            <Skeleton height={36} width={120} />
+          </div>
+          <Skeleton count={10} height={42} style={{ marginTop: 15 }} />
+        </SkeletonTheme>
       </main>
     );
   }
@@ -500,23 +530,74 @@ function DashboardPage({ user, onLogout }) {
 
         <Summary employees={paginatedEmployees} />
 
+         {/* <EmployeeTable
+          employees={paginated}
+          onSort={() => {}}
+          onEdit={handleEdit}
+          onViewDetails={handleViewDetails}
+          onDelete={handleDelete}
+          sortKey={"id"}
+          sortOrder={"asc"}
+          showInvalid={true}
+          showViewMore={false}
+          perms={{ can_add: false, can_update: true, can_delete: true }}
+        />
+      </main> */}
+
+
         <div className="employee-table-wrap">
           <table className="employee-table">
             <thead>
               <tr>
-                <th onClick={() => handleSort('id')}>ID {sortKey==='id'?sortOrder==='asc'?"↑":"↓":''}</th>
-                <th onClick={() => handleSort('name')}>Name {sortKey==='name'?sortOrder==='asc'?"↑":"↓":''}</th>
-                <th onClick={() => handleSort('department')}>Department {sortKey==='department'?sortOrder==='asc'?"↑":"↓":''}</th>
-                <th onClick={() => handleSort('currentsalary')}>Current Salary {sortKey==='currentsalary'?sortOrder==='asc'?"↑":"↓":''}</th>
-                <th onClick={() => handleSort('grade')}>Grade {sortKey==='grade'?sortOrder==='asc'?"↑":"↓":''}</th>
-                <th onClick={() => handleSort('increment')}>Increment (%) {sortKey==='increment'?sortOrder==='asc'?"↑":"↓":''}</th>
-                <th onClick={() => handleSort('incrementedsalary')}>Incremented Salary {sortKey==='incrementedsalary'?sortOrder==='asc'?"↑":"↓":''}</th>
+                <th onClick={() => handleSort("id")}>
+                  ID {sortKey === "id" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+                </th>
+                <th onClick={() => handleSort("name")}>
+                  Name{" "}
+                  {sortKey === "name" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+                </th>
+                <th onClick={() => handleSort("department")}>
+                  Department{" "}
+                  {sortKey === "department"
+                    ? sortOrder === "asc"
+                      ? "↑"
+                      : "↓"
+                    : ""}
+                </th>
+                <th onClick={() => handleSort("currentsalary")}>
+                  Current Salary{" "}
+                  {sortKey === "currentsalary"
+                    ? sortOrder === "asc"
+                      ? "↑"
+                      : "↓"
+                    : ""}
+                </th>
+                <th onClick={() => handleSort("grade")}>
+                  Grade{" "}
+                  {sortKey === "grade" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+                </th>
+                <th onClick={() => handleSort("increment")}>
+                  Increment (%){" "}
+                  {sortKey === "increment"
+                    ? sortOrder === "asc"
+                      ? "↑"
+                      : "↓"
+                    : ""}
+                </th>
+                <th onClick={() => handleSort("incrementedsalary")}>
+                  Incremented Salary{" "}
+                  {sortKey === "incrementedsalary"
+                    ? sortOrder === "asc"
+                      ? "↑"
+                      : "↓"
+                    : ""}
+                </th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {paginatedEmployees.map((e, i) => (
-                <tr key={e.id} className={i%2===0?"even-row":"odd-row"}>
+                <tr key={e.id} className={i % 2 === 0 ? "even-row" : "odd-row"}>
                   <td>{e.id}</td>
                   <td>{e.name}</td>
                   <td>{e.department}</td>
@@ -525,7 +606,9 @@ function DashboardPage({ user, onLogout }) {
                   <td>{e.increment}</td>
                   <td>{e.incrementedsalary}</td>
                   <td>
-                    <button className="action-btn" title="Actions">⋯</button>
+                    <button className="action-btn" title="Actions">
+                      ⋯
+                    </button>
                   </td>
                 </tr>
               ))}

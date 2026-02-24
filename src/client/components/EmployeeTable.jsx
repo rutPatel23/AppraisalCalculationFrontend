@@ -13,6 +13,8 @@ function EmployeeTable({ employees, onSort, onEdit, onViewDetails, onDelete, sor
   }
 
   return (
+    <>
+    
     <table id="employees">
       <thead>
         <tr>
@@ -29,6 +31,7 @@ function EmployeeTable({ employees, onSort, onEdit, onViewDetails, onDelete, sor
             <>
               <th className="num" data-key="currentsalary" onClick={() => onSort('currentsalary')} style={{ cursor: 'pointer' }}>
                 Current Salary <span className="sort">{renderSortIndicator('currentsalary')}</span>
+
               </th>
               <th data-key="grade" onClick={() => onSort('grade')} style={{ cursor: 'pointer' }}>
                 Grade <span className="sort">{renderSortIndicator('grade')}</span>
@@ -124,6 +127,7 @@ function EmployeeTable({ employees, onSort, onEdit, onViewDetails, onDelete, sor
         ))}
       </tbody>
     </table>
+    </>
   )
 }
 

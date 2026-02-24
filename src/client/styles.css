@@ -1,3 +1,4 @@
+
 :root {
   color-scheme: light dark;
   --bg: #0f172a;
@@ -271,8 +272,6 @@ h1 {
   min-width: 220px;
   padding: 6px;
 }
-
-
 
 .menu-item {
   width: 100%;

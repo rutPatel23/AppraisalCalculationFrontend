@@ -12,7 +12,9 @@ import EditEmployeeForm from "../components/EditEmployeeForm";
 import UserMenu from "../components/UserMenu";
 import PieChart from "../components/PieChart";
 import logo from "../pages/logo.png";
-
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import "../styles.css";
 
 export default function InvalidDataPage({ user, onLogout }) {
   const [invalidData, setInvalidData] = useState([]);
@@ -32,7 +34,9 @@ export default function InvalidDataPage({ user, onLogout }) {
   const fetchInvalid = async () => {
     try {
       setLoading(true);
-      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/invalid");
+      const res = await fetch(
+        "https://appraisalcalculationbackend.onrender.com/api/invalid",
+      );
       if (!res.ok) throw new Error("Failed to fetch invalid data");
       const data = await res.json();
       setInvalidData(data);
@@ -56,7 +60,9 @@ export default function InvalidDataPage({ user, onLogout }) {
 
   const handleViewDetails = async (id) => {
     try {
-      const res = await fetch(`https://appraisalcalculationbackend.onrender.com/api/employees/${id}/inputdetails`);
+      const res = await fetch(
+        `https://appraisalcalculationbackend.onrender.com/api/employees/${id}/inputdetails`,
+      );
       if (!res.ok) throw new Error("Failed to fetch details");
       const details = await res.json();
       setModal({ isOpen: true, title: `Details: ${id}`, details });
@@ -64,7 +70,6 @@ export default function InvalidDataPage({ user, onLogout }) {
       setModal({ isOpen: true, title: "Error", content: e.message });
     }
   };
-
 
   const handleToggleTheme = () => {
     const themes = [
@@ -88,7 +93,7 @@ export default function InvalidDataPage({ user, onLogout }) {
     document.body.setAttribute("data-theme", next);
   };
 
- const handleChangePassword = () => {
+  const handleChangePassword = () => {
     // render change password form
     setModal({
       isOpen: true,
@@ -103,7 +108,9 @@ export default function InvalidDataPage({ user, onLogout }) {
   const handleSetRole = async () => {
     // fetch users for select
     try {
-      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/users");
+      const res = await fetch(
+        "https://appraisalcalculationbackend.onrender.com/api/users",
+      );
       const users = res.ok ? await res.json() : [];
       setModal({
         isOpen: true,
@@ -121,7 +128,9 @@ export default function InvalidDataPage({ user, onLogout }) {
 
   const handleDeleteUser = async () => {
     try {
-      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/users");
+      const res = await fetch(
+        "https://appraisalcalculationbackend.onrender.com/api/users",
+      );
       const users = res.ok ? await res.json() : [];
       setModal({
         isOpen: true,
@@ -154,11 +163,14 @@ export default function InvalidDataPage({ user, onLogout }) {
   const handleDelete = async (id) => {
     if (!confirm("Delete this invalid record?")) return;
     try {
-      const res = await fetch(`https://appraisalcalculationbackend.onrender.com/api/invaliddata/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ actor: localStorage.getItem("user") }),
-      });
+      const res = await fetch(
+        `https://appraisalcalculationbackend.onrender.com/api/invaliddata/${id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ actor: localStorage.getItem("user") }),
+        },
+      );
       if (!res.ok) throw new Error("Delete failed");
       await fetchInvalid();
       setModal({ isOpen: false });
@@ -172,7 +184,9 @@ export default function InvalidDataPage({ user, onLogout }) {
   const handleShowWeights = async () => {
     try {
       setLoading(true);
-      const res = await fetch("https://appraisalcalculationbackend.onrender.com/api/weights");
+      const res = await fetch(
+        "https://appraisalcalculationbackend.onrender.com/api/weights",
+      );
       if (!res.ok) throw new Error("Failed to fetch weights");
       const w = await res.json();
       setWeights(w);
@@ -286,8 +300,24 @@ export default function InvalidDataPage({ user, onLogout }) {
   );
   const totalPages = Math.max(1, Math.ceil(filteredInvalid.length / pageSize));
 
-  if (loading)
-    return <main style={{ padding: 20 }}>Loading invalid data...</main>;
+  if (loading) {
+    return (
+      // return <main style={{ padding: 20 }}>Loading invalid data...</main>;
+      <main style={{ padding: 20 }}>
+        {/* <SkeletonTheme baseColor="#fff5f5" highlightColor="#e0e0e0"> */}
+        <SkeletonTheme baseColor="transparent" highlightColor="#e0e0e0">
+
+          <Skeleton height={50} width={320} />
+          <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+            <Skeleton height={36} width={180} />
+            <Skeleton height={36} width={180} />
+            <Skeleton height={36} width={120} />
+          </div>
+          <Skeleton count={10} height={42} style={{ marginTop: 15 }} />
+        </SkeletonTheme>
+      </main>
+    );
+  }
 
   return (
     <>
@@ -510,7 +540,7 @@ export default function InvalidDataPage({ user, onLogout }) {
             />
           </div>
         )}
-{/* Render form-based modals (change password, add user, set role, delete user, edit employee) */}
+        {/* Render form-based modals (change password, add user, set role, delete user, edit employee) */}
         {modal.form && modal.form.type === "change-password" && (
           <ChangePasswordForm onClose={handleCloseModal} />
         )}
@@ -529,8 +559,8 @@ export default function InvalidDataPage({ user, onLogout }) {
             onClose={handleCloseModal}
           />
         )}
-     
-             {modal.form && modal.form.type === "edit-employee" && (
+
+        {modal.form && modal.form.type === "edit-employee" && (
           <EditEmployeeForm
             data={modal.form.data}
             isInvalid={modal.form.isInvalid}
