@@ -542,7 +542,7 @@ function DashboardPage({ user, onLogout }) {
           perms={{ can_add: false, can_update: true, can_delete: true }}
         />
 
-        <div className="employee-table-wrap">
+        {/* <div className="employee-table-wrap">
           <table className="employee-table">
             <thead>
               <tr>
@@ -611,7 +611,7 @@ function DashboardPage({ user, onLogout }) {
               ))}
             </tbody>
           </table>
-        </div>
+        </div> */}
       </main>
 
       <Modal
