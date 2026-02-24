@@ -529,21 +529,18 @@ function DashboardPage({ user, onLogout }) {
         </section>
 
         <Summary employees={paginatedEmployees} />
-
-         {/* <EmployeeTable
-          employees={paginated}
+        <EmployeeTable
+          employees={paginatedEmployees}
           onSort={() => {}}
           onEdit={handleEdit}
           onViewDetails={handleViewDetails}
           onDelete={handleDelete}
           sortKey={"id"}
           sortOrder={"asc"}
-          showInvalid={true}
-          showViewMore={false}
+          showInvalid={false}
+          showViewMore={true}
           perms={{ can_add: false, can_update: true, can_delete: true }}
         />
-      </main> */}
-
 
         <div className="employee-table-wrap">
           <table className="employee-table">
